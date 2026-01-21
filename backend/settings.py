@@ -168,3 +168,4 @@ EMAIL_HOST_PASSWORD = 'uric kfaw rcvn rkuu' # app password (NOT gmail password)
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+print("BACKEND CD IS WORKING")
