@@ -10,19 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_KEY }}
           script: |
-            cd ${{ secrets.EC2_PROJECT_PATH }}
+            cd ~/django-backend
+            source venv/bin/activate
             git pull origin main
-            source backend/venv/bin/activate
-            pip install -r backend/requirements.txt
-            pkill -f runserver || true
-            nohup python manage.py runserver 0.0.0.0:8000 &
+            pip install -r requirements.txt
+            sudo systemctl restart gunicorn || true
